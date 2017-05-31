@@ -31,14 +31,14 @@ if __name__ == "__main__":
     # ... or whatever
 
     env = get_env()
-    number_of_epochs = 100
+    number_of_epochs = 5000
 
-    agent = RandomAgent(env, number_of_epochs)
+    # agent = RandomAgent(env, number_of_epochs)
     #agent = DealerAgent(env, number_of_epochs)
-    #agent = TDAgent(env, number_of_epochs)
+    agent = TDAgent(env, number_of_epochs)
     #agent = SarsaAgent(env, number_of_epochs)
     agent.train()
 
     # in evaluate.py are some ideas that you might want to use to evaluate the agent
     # feel free to modify the code as you want to
-    evaluate(env.get_episode_rewards())
+    # evaluate(env.get_episode_rewards()) # TODO comment in?

@@ -1,1 +1,5 @@
 Skaffa 3.5? OPEN ai funkar för 3.6?
+
+conda info --envs
+source activate OPENAIGYM
+python —-version
