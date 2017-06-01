@@ -21,26 +21,37 @@ class TDAgent:
         alpha = 0.1 # Learning rate. TODO: Set arbitrarily
         discount = 1 # Discount rate # TODO: Set arbitrarily
 
-        utility_est = np.zeros(22)
+        utility_est = np.zeros((12, 22))
+        # print(utility_est[0])
 
         for i in range(self.number_of_epochs):
             observation = self.env.reset()
             terminal = False
             reward = 0
 
-            state = observation.player_hand.value()
+            # state = observation.player_hand.value()
+
+            p_val = observation.player_hand.value()
+            d_val = observation.dealer_hand.value()
+
             while not terminal:
                 action = self.make_step(observation, reward, terminal)
                 observation, reward, terminal, _ = self.env.step(action)
 
-                next_state = observation.player_hand.value()
+                # next_state = observation.player_hand.value()
+                next_p_val = observation.player_hand.value()
+                next_d_val = observation.dealer_hand.value()
 
                 if terminal == True:
-                    next_state = 0 # Terminal state with utility of 0
+                    # next_state = 0 # Terminal state with utility of 0
+                    next_p_val = 0
+                    next_d_val = 0
 
-                utility_est[state] += alpha * (reward + discount * utility_est[next_state] - utility_est[state])
+                # utility_est[state] += alpha * (reward + discount * utility_est[next_state] - utility_est[state])
+                utility_est[d_val][p_val] += alpha * (reward + discount * utility_est[next_d_val][next_p_val] - utility_est[d_val][p_val])
 
-                state = next_state
+                # state = next_state
+                p_val = next_p_val
 
                 # self.env.render()
                 # print("Reward is {:d}".format(reward))

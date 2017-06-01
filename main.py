@@ -31,7 +31,7 @@ if __name__ == "__main__":
     # ... or whatever
 
     env = get_env()
-    number_of_epochs = 8000
+    number_of_epochs = 9000
 
     # agent = RandomAgent(env, number_of_epochs)
     #agent = DealerAgent(env, number_of_epochs)
