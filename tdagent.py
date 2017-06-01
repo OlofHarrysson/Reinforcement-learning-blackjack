@@ -19,11 +19,9 @@ class TDAgent:
     def train(self):
 
         alpha = 0.1 # Learning rate. TODO: Set arbitrarily
-        discount = 0.9 # Discount rate # TODO: Set arbitrarily
+        discount = 1 # Discount rate # TODO: Set arbitrarily
 
-        # TODO: 0 - 22
-        utility_est = np.zeros(23) # TODO: change to delete first or add to last?
-
+        utility_est = np.zeros(22)
 
         for i in range(self.number_of_epochs):
             observation = self.env.reset()
@@ -32,35 +30,29 @@ class TDAgent:
 
             state = observation.player_hand.value()
             while not terminal:
-                # render method will print you the situation in the terminal
-                # self.env.render()
                 action = self.make_step(observation, reward, terminal)
                 observation, reward, terminal, _ = self.env.step(action)
 
                 next_state = observation.player_hand.value()
 
-                if next_state > 22:
-                    next_state = 22
+                if terminal == True:
+                    next_state = 0 # Terminal state with utility of 0
 
-                utility_est[state] += alpha * (reward + discount*utility_est[next_state] - utility_est[state])
+                utility_est[state] += alpha * (reward + discount * utility_est[next_state] - utility_est[state])
 
                 state = next_state
 
                 # self.env.render()
                 # print("Reward is {:d}".format(reward))
-                # print(utility_est)
+                # print("Action is {:d}".format(action))
                 # pause()
+                # print(utility_est)
                 # sys.exit(1)
 
 
         print("################################################")
         print(utility_est)
 
-
-
-
-                # TODO your code will be very likely here
-            #self.env.render()
 
     def make_step(self, observation, reward, terminal):
         return 1 if observation.player_hand.value() < 17 else 0
